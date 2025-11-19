@@ -1,20 +1,6 @@
 package data;
 
 import common.ParkingViolation;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ParkingViolationReader {
-}
-package data;
-
-import common.ParkingViolation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
