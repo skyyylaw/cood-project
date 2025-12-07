@@ -253,7 +253,10 @@ public class ParkingViolationReader {
   }
 
   public static void main(String[] args) {
-    System.out.println(readCsvFile("parking.csv"));
+    // System.out.println(readCsvFile("parking.csv"));
+    // System.out.println(readJsonFile("parking.json"));
+    System.out.println("Equal contents (order does not matter): " +
+        (new java.util.HashSet<>(readCsvFile("parking.csv")).equals(new java.util.HashSet<>(readJsonFile("parking.json")))));
   }
 
 }
