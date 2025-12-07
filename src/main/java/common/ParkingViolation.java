@@ -1,6 +1,7 @@
 package common;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class ParkingViolation {
   private Instant timestamp;
@@ -70,6 +71,18 @@ public class ParkingViolation {
   }
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ParkingViolation that = (ParkingViolation) o;
+    return Double.compare(that.fine, fine) == 0 && Objects.equals(timestamp, that.timestamp) && Objects.equals(description, that.description) && Objects.equals(vehicleId, that.vehicleId) && Objects.equals(licensePlateState, that.licensePlateState) && Objects.equals(violationId, that.violationId) && Objects.equals(zipCode, that.zipCode);
+  }
+  @Override
+  public int hashCode() {
+    return java.util.Objects.hash(timestamp, fine, description, vehicleId, licensePlateState, violationId, zipCode);
   }
 
   @Override
