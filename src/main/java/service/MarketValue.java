@@ -2,13 +2,22 @@ package service;
 
 public class MarketValue {
 
+    private String parkingViolationFilePath;
+    private String propertyValueFilePath;
+    private String populationFilePath;
+
+    public MarketValue(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
+        this.parkingViolationFilePath = parkingViolationFilePath;
+        this.propertyValueFilePath = propertyValueFilePath;
+        this.populationFilePath = populationFilePath;
+    }
 
     /**
      * Menu Option 3: Show average market value for residences in a specified ZIP Code
      * @param zipCode the ZIP Code to get the average market value for
      * @return the average market value for residences in the specified ZIP Code
      */
-    public static int getAverageMarketValue(String zipCode) {
+    public int getAverageMarketValue(String zipCode) {
         return 0;
     }
 
@@ -20,7 +29,7 @@ public class MarketValue {
      * @param zipCode the ZIP Code to get the total residential market value for
      * @return the total residential market value for the specified ZIP Code
      */
-    public static int getResidentialMarketValuePerCapita(String zipCode) {
+    public int getResidentialMarketValuePerCapita(String zipCode) {
         return 0;
     }
 
@@ -30,7 +39,7 @@ public class MarketValue {
      * @param zipCode the ZIP Code to get the average market value per square foot for
      * @return the average market value per square foot for residences in the specified ZIP Code
      */
-    public static int getAverageMarketValuePerSquareFoot(String zipCode) {
+    public int getAverageMarketValuePerSquareFoot(String zipCode) {
         return 0;
     }
 
