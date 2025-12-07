@@ -36,3 +36,194 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# General system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+
+# Maven & Gradle build output
+**/target/
+**/build/
+**/.classpath
+**/.project
+**/.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+.idea/
+*.ipr
+*.iml
+*.iws
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/vcs.xml
+.idea/.name
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/*.xml
+.idea/assetWizardSettings.xml
+.idea/shelf/
+.idea/gradle.xml
+.idea/sonarlint/
+.idea/httpRequests/
+.idea/.gitignore
+
+# Eclipse
+*.launch
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+.netbeans/
+*.nb-gradle.xml
+
+# VS Code
+.vscode/
+.history/
+*.code-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux/temp/system
+*~
+.nfs*
+
+# Windows
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.javadoc
+hs_err_pid*
+*.hprof
+
+# Test, reporting, and coverage
+/test-output/
+/test-results/
+*.cover
+*.coverage
+*.lcov
+*.clover
+/coverage/
+jacoco.exec
+
+# Generated sources & annotation processing
+/generated/
+*.generated/
+**/generated-sources/
+**/generated-test-sources/
+*.gen.*
+
+# Package management
+/node_modules/
+npm-debug.log*
+yarn-error.log
+yarn-debug.log*
+/.pnpm-debug.log
+/.pnp*
+
+# Environment files
+.env
+.env.*
+.envrc
+
+# CI/CD
+/.github/
+.gitlab/
+.gitattributes
+.travis.yml
+.circleci/
+
+# IDE specific
+*.idea/
+*.sublime*
+*.tmproj
+*.tmTheme
+*.komodoproject
+*.pydevproject
+
+# Miscellaneous
+*.swp
+*.swo
+*.bak
+*.orig
+*.tmp
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage reports
+coverage/
+lcov-report/
+
+# Temporary files
+*.tmp
+*.temp
+*.old
+*.cache
+.cache/
+*.pid
+*.seed
+*.pid.lock
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# Secrets and credential files
+*.key
+*.pem
+*.p12
+*.crt
+*.csr
+*.der
+*.jks
+*.keystore
+
+# Misc Maven/Gradle wrappers
+.mvn/
+.gradle/
+buildSrc/.gradle/
+gradle-app.setting
+gradle-app.reporting
+wrapper/
+gradlew
+gradlew.bat
+
