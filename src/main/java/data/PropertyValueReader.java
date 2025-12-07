@@ -47,8 +47,11 @@ public class PropertyValueReader {
    * Returns -1 if not found
    */
   private static int findColumnIndex(String[] headers, String target) {
+    if (headers == null || target == null) {
+      return -1;
+    }
     for (int i = 0; i < headers.length; i++) {
-      if (headers[i].trim().equals(target)) {
+      if (headers[i] != null && headers[i].trim().equals(target)) {
         return i;
       }
     }
@@ -58,8 +61,16 @@ public class PropertyValueReader {
   /**
    * Reads property values from a CSV file
    * The first row contains headers that indicate column positions
+   * @param fileName the path to the CSV file (must not be null or empty)
+   * @return a list of PropertyValue objects parsed from the file
+   * @throws IllegalArgumentException if fileName is null or empty
+   * @throws RuntimeException if the file cannot be read or required columns are missing
    */
   public static List<PropertyValue> readCsvFile(String fileName) {
+    if (fileName == null || fileName.trim().isEmpty()) {
+      throw new IllegalArgumentException("File name cannot be null or empty");
+    }
+    
     ArrayList<PropertyValue> propertyValues = new ArrayList<>();
     
     try {
