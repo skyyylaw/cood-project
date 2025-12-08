@@ -51,7 +51,34 @@ public class ResidentialAreaService {
      * @return an array where the first element is the minimum and the second is the maximum livable area
      */
     public int[] getMinAndMaxLivableAreas(String zipCode) {
-        return new int[]{0, 0};
+        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+        if (zipCode == null || zipCode.isEmpty()) {
+            return new int[]{0, 0};
+        }
+        
+        Double minArea = null;
+        Double maxArea = null;
+        
+        for (PropertyValue pv : propertyValues) {
+            if (pv == null) continue;
+            String pvZip = pv.getZipCode();
+            Double area = pv.getTotalLivableArea();
+            if (pvZip == null || area == null) continue;
+            if (zipCode.equals(pvZip)) {
+                if (minArea == null || area < minArea) {
+                    minArea = area;
+                }
+                if (maxArea == null || area > maxArea) {
+                    maxArea = area;
+                }
+            }
+        }
+        
+        if (minArea == null || maxArea == null) {
+            return new int[]{0, 0};
+        }
+        
+        return new int[]{(int)Math.round(minArea), (int)Math.round(maxArea)};
     }
     
 }
