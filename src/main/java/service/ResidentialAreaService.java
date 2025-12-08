@@ -1,5 +1,10 @@
 package service;
 
+import java.util.List;
+
+import common.PropertyValue;
+import data.PropertyValueReader;
+
 public class ResidentialAreaService {
 
     private String parkingViolationFilePath;
@@ -18,7 +23,26 @@ public class ResidentialAreaService {
      * @return the average residential area for residences in the specified ZIP Code
      */
     public int getAverageResidentialArea(String zipCode) {
-        return 0;
+        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+        double totalArea = 0;
+        int count = 0;
+        if (zipCode == null || zipCode.isEmpty()) {
+            return 0;
+        }
+        for (PropertyValue pv : propertyValues) {
+            if (pv == null) continue;
+            String pvZip = pv.getZipCode();
+            Double area = pv.getTotalLivableArea();
+            if (pvZip == null || area == null) continue;
+            if (zipCode.equals(pvZip)) {
+                totalArea += area;
+                count++;
+            }
+        }
+        if (count == 0) {
+            return 0;
+        }
+        return (int)Math.round(totalArea / count);
     }   
 
     /**
