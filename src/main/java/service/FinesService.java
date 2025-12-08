@@ -6,10 +6,8 @@ import java.util.Map;
 
 import common.ParkingViolation;
 import common.Population;
-import common.PropertyValue;
 import data.ParkingViolationReader;
 import data.PopulationReader;
-import data.PropertyValueReader;
 
 public class FinesService {
 
@@ -39,12 +37,22 @@ public class FinesService {
         }
         List<Population> populations = PopulationReader.readPopulationFile(populationFilePath);
 
-        // Sum all fines for each ZIP Code
         Map<String, Double> totalFinesPerZipCode = new HashMap<>();
         for (ParkingViolation parkingViolation : parkingViolations) {
+            // Filter: ignore violations where license plate state is not "PA"
+            String state = parkingViolation.getLicensePlateState();
+            if (state == null || !state.trim().equals("PA")) {
+                continue;
+            }
+            
+            // Filter: ignore violations where ZIP Code is unknown (null or empty)
             String zipCode = parkingViolation.getZipCode();
+            if (zipCode == null || zipCode.trim().isEmpty()) {
+                continue;
+            }
+            
             Double fine = parkingViolation.getFine();
-            // Accumulate
+            // Accumulate fines for valid violations
             totalFinesPerZipCode.put(zipCode, totalFinesPerZipCode.getOrDefault(zipCode, 0.0) + fine);
         }
 
@@ -58,10 +66,19 @@ public class FinesService {
         for (Map.Entry<String, Double> entry : totalFinesPerZipCode.entrySet()) {
             String zipCode = entry.getKey();
             Double totalFine = entry.getValue();
-            Integer population = zipToPopulation.get(zipCode);
-            if (population != null && population > 0) {
-                finesPerCapitaPerZipCode.put(zipCode, totalFine / population);
+            
+            // Filter: don't display ZIP Codes where total aggregate fines = 0
+            if (totalFine == null || totalFine == 0.0) {
+                continue;
             }
+            
+            // Filter: don't display ZIP Codes where population = 0
+            Integer population = zipToPopulation.get(zipCode);
+            if (population == null || population == 0) {
+                continue;
+            }
+            
+            finesPerCapitaPerZipCode.put(zipCode, totalFine / population);
         }
         return finesPerCapitaPerZipCode;
     }
