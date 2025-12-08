@@ -105,7 +105,27 @@ public class MarketValueService {
      * @return the average market value per square foot for residences in the specified ZIP Code
      */
     public int getAverageMarketValuePerSquareFoot(String zipCode) {
-        return 0;
+        if (zipCode == null || zipCode.isEmpty()) {
+            return 0;
+        }
+        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+        double totalMarketValue = 0;
+        double totalLivableArea = 0;
+        for (PropertyValue pv : propertyValues) {
+            if (pv == null) continue;
+            String pvZip = pv.getZipCode();
+            Double marketValue = pv.getMarketValue();
+            Double livableArea = pv.getTotalLivableArea();
+            if (pvZip == null || marketValue == null || livableArea == null) continue;
+            if (zipCode.equals(pvZip) && livableArea > 0) {
+                totalMarketValue += marketValue;
+                totalLivableArea += livableArea;
+            }
+        }
+        if (totalLivableArea == 0) {
+            return 0;
+        }
+        return (int) Math.round(totalMarketValue / totalLivableArea);
     }
 
 }
