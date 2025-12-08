@@ -1,12 +1,12 @@
 package service;
 
-public class MarketValue {
+public class MarketValueService {
 
     private String parkingViolationFilePath;
     private String propertyValueFilePath;
     private String populationFilePath;
 
-    public MarketValue(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
+    public MarketValueService(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
         this.parkingViolationFilePath = parkingViolationFilePath;
         this.propertyValueFilePath = propertyValueFilePath;
         this.populationFilePath = populationFilePath;

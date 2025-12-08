@@ -1,12 +1,12 @@
 package service;
 
-public class ResidentialArea {
+public class ResidentialAreaService {
 
     private String parkingViolationFilePath;
     private String propertyValueFilePath;
     private String populationFilePath;
 
-    public ResidentialArea(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
+    public ResidentialAreaService(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
         this.parkingViolationFilePath = parkingViolationFilePath;
         this.propertyValueFilePath = propertyValueFilePath;
         this.populationFilePath = populationFilePath;
