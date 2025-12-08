@@ -10,16 +10,15 @@ public class Main {
   
   public static void main(String[] args) {
     // Validate number of arguments
-    if (args.length != 4) {
+    if (args.length != 3) {
       System.err.println("Error: Incorrect number of arguments.");
-      System.err.println("Expected 4 arguments: <format> <parking_file> <property_file> <population_file>");
-      System.err.println("  format: \"csv\" or \"json\" (case-sensitive)");
+      System.err.println("Expected 3 arguments: <parking_file> <property_file> <population_file>");
       System.exit(1);
     }
     
-    String parkingFile = args[1];
-    String propertyFile = args[2];
-    String populationFile = args[3];
+    String parkingFile = args[0];
+    String propertyFile = args[1];
+    String populationFile = args[2];
   
     UI ui = new UI(parkingFile, propertyFile, populationFile, new Scanner(System.in));
     ui.start();
