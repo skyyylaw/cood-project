@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import common.Population;
+import data.PopulationReader;
+
 public class PopulationService {
 
     private String parkingViolationFilePath;
@@ -20,9 +23,9 @@ public class PopulationService {
      * @return a map of zip codes to populations
      */
     public Long getPopulationAllZipCodes() {
-        List<PopulationService> populations = PopulationReader.readPopulationFile(populationFilePath);
+        List<Population> populations = PopulationReader.readPopulationFile(populationFilePath);
         long total = 0;
-        for (PopulationService p : populations) {
+        for (Population p : populations) {
             total += p.getPopulation();
         }
         return total;
