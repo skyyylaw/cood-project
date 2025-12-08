@@ -1,5 +1,12 @@
 package service;
 
+import java.util.List;
+
+import common.Population;
+import common.PropertyValue;
+import data.PopulationReader;
+import data.PropertyValueReader;
+
 public class MarketValueService {
 
     private String parkingViolationFilePath;
@@ -18,7 +25,29 @@ public class MarketValueService {
      * @return the average market value for residences in the specified ZIP Code
      */
     public int getAverageMarketValue(String zipCode) {
-        return 0;
+        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+        double totalMarketValue = 0;
+        int count = 0;
+
+        if (zipCode == null || zipCode.isEmpty()) {
+            return 0;
+        }
+
+        for (PropertyValue pv : propertyValues) {
+            if (pv == null) continue;
+            String pvZip = pv.getZipCode();
+            Double marketValue = pv.getMarketValue();
+            if (pvZip == null || marketValue == null) continue;
+            if (zipCode.equals(pvZip)) {
+                totalMarketValue += marketValue;
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            return 0;
+        }
+        return (int)Math.round(totalMarketValue / count);
     }
 
 
