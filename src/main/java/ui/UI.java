@@ -7,6 +7,8 @@ import service.Population;
 import service.Fines;
 import service.MarketValue;
 import service.ResidentialArea;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -54,12 +56,20 @@ public class UI {
                 continue;
             }
 
+            //declaring zipCode. cases below after 1 still untouched!
+            String zipCode;
+
             switch (choice) {
                 case 1:
-                    System.out.println("Enter ZIP Code: ");
-                    String zipCode = scanner.nextLine().trim();
-                    System.out.println("Total population for ZIP Code " + zipCode + ": " + populationService.getPopulationAllZipCodes().get(zipCode));
+                    //"If the user enters the number 1, the program should show the total population for all ZIP Codes"
+                    List<common.Population> populations = PopulationReader.readPopulationFile(populationFilePath);
+                    long totalPopulation = 0;
+                    for (common.Population p : populations) {
+                        totalPopulation += p.getPopulation();
+                    }
+                    System.out.println("Total population for all ZIP Codes: " + totalPopulation);
                     break;
+
                 case 2:
                     System.out.println("Enter ZIP Code: ");
                     zipCode = scanner.nextLine().trim();
