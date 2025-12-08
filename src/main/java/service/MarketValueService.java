@@ -52,14 +52,50 @@ public class MarketValueService {
 
 
     /**
-     * Menu Option 5: Show total residential market value for a specified ZIP Code
-     * i.e.  the total market value for all residences in the ZIP Code divided 
-     * by the population of that ZIP Code, as provided in the population input file
-     * @param zipCode the ZIP Code to get the total residential market value for
-     * @return the total residential market value for the specified ZIP Code
-     */
+     /**
+      * Menu Option 5: Show residential market value per capita for a specified ZIP Code.
+      * The residential market value per capita is the total market value for all residences
+      * in the ZIP Code divided by the population of that ZIP Code (as provided in the population input file).
+      * If there are no residences or the ZIP Code is not found in the population input file, returns 0.
+      * The returned value is rounded to the nearest integer.
+      * 
+      * @param zipCode the ZIP Code to compute the residential market value per capita for
+      * @return the residential market value per capita for the specified ZIP Code, rounded to the nearest integer; or 0 if data is missing
+      */
     public int getResidentialMarketValuePerCapita(String zipCode) {
-        return 0;
+        if (zipCode == null || zipCode.isEmpty()) {
+            return 0;
+        }
+
+        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+        double totalMarketValue = 0;
+
+        for (PropertyValue pv : propertyValues) {
+            if (pv == null) continue;
+            String pvZip = pv.getZipCode();
+            Double marketValue = pv.getMarketValue();
+            if (pvZip == null || marketValue == null) continue;
+            if (zipCode.equals(pvZip)) {
+                totalMarketValue += marketValue;
+            }
+        }
+
+        // now read population from the population file
+        List<Population> populationList = PopulationReader.readPopulationFile(populationFilePath);
+        int populationForZip = 0;
+        for (Population pop : populationList) {
+            if (pop == null) continue;
+            if (zipCode.equals(pop.getZipCode())) {
+                populationForZip = pop.getPopulation();
+                break;
+            }
+        }
+
+        if (populationForZip == 0) {
+            return 0;
+        }
+
+        return (int) Math.round(totalMarketValue / populationForZip);
     }
 
     /** 
