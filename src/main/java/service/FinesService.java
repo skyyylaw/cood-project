@@ -28,7 +28,15 @@ public class FinesService {
      * @return a map of zip codes to parking fines per capita
      */
     public Map<String, Double> getFinesPerCapitaPerZipCode() {
-        List<ParkingViolation> parkingViolations = ParkingViolationReader.readJsonFile(parkingViolationFilePath);
+        // Judge file type by extension and use appropriate reader (JSON or CSV)
+        List<ParkingViolation> parkingViolations;
+        if (parkingViolationFilePath != null && parkingViolationFilePath.toLowerCase().endsWith(".json")) {
+            parkingViolations = ParkingViolationReader.readJsonFile(parkingViolationFilePath);
+        } else if (parkingViolationFilePath != null && parkingViolationFilePath.toLowerCase().endsWith(".csv")) {
+            parkingViolations = ParkingViolationReader.readCsvFile(parkingViolationFilePath);
+        } else {
+            throw new IllegalArgumentException("Unsupported file format for parking violations. Only .json or .csv are allowed.");
+        }
         List<Population> populations = PopulationReader.readPopulationFile(populationFilePath);
 
         // Sum all fines for each ZIP Code
