@@ -10,13 +10,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UI {
+    private static UI instance;
     private Scanner scanner;
     private PopulationService populationService;
     private FinesService finesService;
     private MarketValueService marketValueService;
     private ResidentialAreaService residentialAreaService;
 
-    public UI(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath, Scanner scanner) {
+    private UI(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath, Scanner scanner) {
         this.scanner = scanner;
         this.populationService = new PopulationService(parkingViolationFilePath, propertyValueFilePath, populationFilePath);
         this.finesService = new FinesService(parkingViolationFilePath, propertyValueFilePath, populationFilePath);
@@ -24,9 +25,16 @@ public class UI {
         this.residentialAreaService = new ResidentialAreaService(parkingViolationFilePath, propertyValueFilePath, populationFilePath);
     }
 
-
-    
-
+    /**
+     * Returns the singleton instance of UI.
+     * Initializes the instance if it hasn't been created yet.
+     */
+    public static synchronized UI getInstance(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath, Scanner scanner) {
+        if (instance == null) {
+            instance = new UI(parkingViolationFilePath, propertyValueFilePath, populationFilePath, scanner);
+        }
+        return instance;
+    }
 
     public void start() {
         if (scanner == null) {

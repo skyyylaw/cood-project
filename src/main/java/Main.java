@@ -20,7 +20,7 @@ public class Main {
     String propertyFile = args[1];
     String populationFile = args[2];
   
-    UI ui = new UI(parkingFile, propertyFile, populationFile, new Scanner(System.in));
+    UI ui = UI.getInstance(parkingFile, propertyFile, populationFile, new Scanner(System.in));
     ui.start();
   }
 }
