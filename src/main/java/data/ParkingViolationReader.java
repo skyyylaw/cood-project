@@ -252,6 +252,30 @@ public class ParkingViolationReader {
     return parkingViolations;
   }
 
+  /**
+   * Creates a reading strategy based on file extension.
+   */
+  public static FileReadingStrategy getStrategy(String fileName) {
+    if (fileName == null || fileName.trim().isEmpty()) {
+      throw new IllegalArgumentException("File name cannot be null or empty");
+    }
+    String lowerFileName = fileName.toLowerCase();
+    if (lowerFileName.endsWith(".json")) {
+      return new JsonReadingStrategy();
+    } else if (lowerFileName.endsWith(".csv")) {
+      return new CsvReadingStrategy();
+    } else {
+      throw new IllegalArgumentException("Unsupported file format. Only .json or .csv are allowed.");
+    }
+  }
+
+  /**
+   * Reads file using Strategy pattern.
+   */
+  public static List<ParkingViolation> readFile(String fileName) {
+    return getStrategy(fileName).read(fileName);
+  }
+
   public static void main(String[] args) {
     // System.out.println(readCsvFile("parking.csv"));
     // System.out.println(readJsonFile("parking.json"));
