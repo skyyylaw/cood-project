@@ -1,13 +1,13 @@
 package ui;
 
-import service.PopulationService;
-import service.FinesService;
-import service.MarketValueService;
-import service.ResidentialAreaService;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import processor.FinesService;
+import processor.MarketValueService;
+import processor.PopulationService;
+import processor.ResidentialAreaService;
 
 public class UI {
     private static UI instance;
