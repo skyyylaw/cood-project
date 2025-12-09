@@ -1,6 +1,8 @@
 package processor;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import common.Population;
 import common.PropertyValue;
@@ -12,6 +14,9 @@ public class MarketValueService {
     private String parkingViolationFilePath;
     private String propertyValueFilePath;
     private String populationFilePath;
+    
+    // Memoization cache for getAverageMarketValue results
+    private final Map<String, Integer> averageMarketValueCache = new ConcurrentHashMap<>();
 
     public MarketValueService(String parkingViolationFilePath, String propertyValueFilePath, String populationFilePath) {
         this.parkingViolationFilePath = parkingViolationFilePath;
@@ -21,33 +26,40 @@ public class MarketValueService {
 
     /**
      * Menu Option 3: Show average market value for residences in a specified ZIP Code
+     * Uses memoization to cache results for previously computed ZIP codes.
      * @param zipCode the ZIP Code to get the average market value for
      * @return the average market value for residences in the specified ZIP Code
      */
     public int getAverageMarketValue(String zipCode) {
-        List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
-        double totalMarketValue = 0;
-        int count = 0;
-
         if (zipCode == null || zipCode.isEmpty()) {
             return 0;
         }
+        
+        // Check cache first (memoization)
+        return averageMarketValueCache.computeIfAbsent(zipCode, key -> {
+            
+            System.out.println("did not hit cache");
+            
+            List<PropertyValue> propertyValues = PropertyValueReader.readCsvFile(propertyValueFilePath);
+            double totalMarketValue = 0;
+            int count = 0;
 
-        for (PropertyValue pv : propertyValues) {
-            if (pv == null) continue;
-            String pvZip = pv.getZipCode();
-            Double marketValue = pv.getMarketValue();
-            if (pvZip == null || marketValue == null) continue;
-            if (zipCode.equals(pvZip)) {
-                totalMarketValue += marketValue;
-                count++;
+            for (PropertyValue pv : propertyValues) {
+                if (pv == null) continue;
+                String pvZip = pv.getZipCode();
+                Double marketValue = pv.getMarketValue();
+                if (pvZip == null || marketValue == null) continue;
+                if (key.equals(pvZip)) {
+                    totalMarketValue += marketValue;
+                    count++;
+                }
             }
-        }
 
-        if (count == 0) {
-            return 0;
-        }
-        return (int)Math.round(totalMarketValue / count);
+            if (count == 0) {
+                return 0;
+            }
+            return (int)Math.round(totalMarketValue / count);
+        });
     }
 
 
