@@ -3,6 +3,7 @@ package processor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import common.ParkingViolation;
 import common.Population;
@@ -50,10 +51,8 @@ public class FinesService {
         }
 
         // populations is a List<Population>, so build a ZipCode->Population map first
-        Map<String, Integer> zipToPopulation = new HashMap<>();
-        for (Population pop : populations) {
-            zipToPopulation.put(pop.getZipCode(), pop.getPopulation());
-        }
+        Map<String, Integer> zipToPopulation = populations.stream()
+                .collect(Collectors.toMap(pop -> pop.getZipCode(), pop -> pop.getPopulation()));
 
         Map<String, Double> finesPerCapitaPerZipCode = new HashMap<>();
         for (Map.Entry<String, Double> entry : totalFinesPerZipCode.entrySet()) {
